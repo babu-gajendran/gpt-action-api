@@ -1,4 +1,38 @@
 import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+
+
+const app = express();
+const port = process.env.PORT || 4000;
+
+
+// Configure CORS – allow your UI origin and ChatGPT actions (wide-open for POC)
+app.use(cors({ origin: process.env.CORS_ORIGIN?.split(",") || true }));
+app.use(express.json());
+
+
+// ---- Mock Data ---- //
+const mockProducts = [
+{
+id: "P001",
+name: "Ford Mustang GT",
+category: "vehicle",
+make: "Ford",
+price: 6500000,
+image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1200",
+description: "5.0L V8 Fastback with 450 HP",
+specs: { engine: "5.0L V8", transmission: "6-speed MT", color: "Red" }
+},
+{
+id: "P002",
+name: "Ford EV Home Charger",
+category: "accessory",
+make: "Ford",
+price: 48000,
 image: "https://images.unsplash.com/photo-1600083720666-c47d5ff3e2a9?w=1200",
 description: "Fast charging station for Ford EVs",
 specs: { power: "7.4kW", plug: "Type 2" }
@@ -13,8 +47,7 @@ image: "https://images.unsplash.com/photo-1600959907703-125ba1374a12?w=1200",
 description: "Genuine brake pads for Ford Ranger",
 specs: { material: "Ceramic", warranty: "12 months" }
 }
-];
-
+];	
 
 // ---- Helpers ---- //
 const ok = (res, data) => res.json(data);
